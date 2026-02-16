@@ -13,28 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "test.md",
+                "file": "homework_1_mac.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "test"
-            }
-          }
-        ]
-      },
-      {
-        "id": "15209a864e2db8fa",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "9175ee1fd511b069",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "title": "homework_1_mac"
             }
           }
         ]
@@ -198,9 +182,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "568d4040b5c81f7b",
+  "active": "6d561a25f20e9c0c",
   "lastOpenFiles": [
     "test.md",
+    "homework_1_mac.md",
     "Welcome.md"
   ]
 }
