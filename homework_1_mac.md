@@ -51,18 +51,21 @@ Inside `/scratch/alpine/c837277701@colostate.edu/cow/`, I created:
 - metadata
 - core_metrics
 
-5. Download the cow_barcodes.txt and cow_metadata.txt files from Canvas and upload them both to your metadata folder within your new cow directory. So, your filepath should look something like this: /scratch/alpine/$USER/cow/metadata
+4. Download the cow_barcodes.txt and cow_metadata.txt files from Canvas and upload them both to your metadata folder within your new cow directory. So, your filepath should look something like this: /scratch/alpine/$USER/cow/metadata. 
 
-6. On OnDemand, go to your cow directory and open a new terminal
+ANSWER: I downloaded `cow_barcodes.txt` and `cow_metadata.txt` from Canvas and uploaded them to:
+`/scratch/alpine/c837277701@colostate.edu/cow/metadata/`
 
-7. Copy the raw sequencing files from this public folder to **your new folder** using the terminal. Do **not** change the names of these files and folders. Hint: make sure you are in your new cow folder before you run this code (this will copy over the whole folder):  
+5. On OnDemand, go to your cow directory and open a new terminal
+
+6. Copy the raw sequencing files from this public folder to **your new folder** using the terminal. Do **not** change the names of these files and folders. Hint: make sure you are in your new cow folder before you run this code (this will copy over the whole folder):  
 
 ```
 cp -r /pl/active/courses/2024_summer/maw_2024/raw_reads .
 ```
 
 
-5.    Launch an interactive session and load qiime2 within your cow directory. 
+7.    Launch an interactive session and load qiime2 within your cow directory. 
 
 ```
 #launch an interactive session: 
@@ -74,7 +77,7 @@ ainteractive --ntasks=6 --time=02:00:00
 ```
 
 
-6.    Import the sequences/reads into a Qiime2-readable format (.qza). Note this might take 10-20 mins
+8.    Import the sequences/reads into a Qiime2-readable format (.qza). Note this might take 10-20 mins
 
 ```
 qiime tools import \
@@ -84,7 +87,7 @@ qiime tools import \
 ```
 
 
-7.    Demultiplex the reads by submitting a job. Note this may take ~30 mins
+9.    Demultiplex the reads by submitting a job. Note this may take ~30 mins
 
 a.    Go into your slurm directory using OnDemand. Create a new file named **demux.sh** so you can submit a job that will demultiplex your sequences quicker. Fill in the lines that need editing (denoted by capital letters or hashes) to this demultiplexing command and add that to your new script. 
 
@@ -129,7 +132,7 @@ qiime demux summarize \
  sbatch name of your script.sh
  ```
 
-8.    Denoise. 
+10.    Denoise. 
 
 Fill in the blank to denoise your samples based on what you think should be trimmed (from the front of the reads) or truncated (from the ends of the reads) based on the demux_cow.qzv file. You can run this in the terminal or as a job.
 
