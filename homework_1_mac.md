@@ -58,12 +58,14 @@ ANSWER: I downloaded `cow_barcodes.txt` and `cow_metadata.txt` from Canvas and u
 
 5. On OnDemand, go to your cow directory and open a new terminal
 
-6. Copy the raw sequencing files from this public folder to **your new folder** using the terminal. Do **not** change the names of these files and folders. Hint: make sure you are in your new cow folder before you run this code (this will copy over the whole folder):  
+6. Copy the raw sequencing files from this public folder to **your new folder** using the terminal. Do **not** change the names of these files and folders. Hint: make sure you are in your new cow folder before you run this code (this will copy over the whole folder):  I Opened an OnDemand terminal in my cow directory.
 
 ```
 cp -r /pl/active/courses/2024_summer/maw_2024/raw_reads .
 ```
 
+This created a `raw_reads/` folder in:  
+`/scratch/alpine/c837277701@colostate.edu/cow/`
 
 7.    Launch an interactive session and load qiime2 within your cow directory. 
 
@@ -72,6 +74,9 @@ cp -r /pl/active/courses/2024_summer/maw_2024/raw_reads .
 ainteractive --ntasks=6 --time=02:00:00
 
 #insert your code here to activate qiime. Hint: there should be 2 things you add here
+
+module purge
+module load qiime2/2024.10_amplicon
 
 
 ```
@@ -104,7 +109,10 @@ a.    Go into your slurm directory using OnDemand. Create a new file named **
 #SBATCH --qos=normal
 #SBATCH --mail-user=ADD_YOUR_EMAIL@colostate.edu
 
-#What needs to go here in order to “turn on” qiime2? Hint: we do these 2 commands every time we activate qiime2!
+#What needs to go here in order to “turn on” qiime2? Hint: we do these 2 commands every time we activate qiime2!                        
+
+module purge
+module load qiime2/2024.10_amplicon
 
 #change the following line if your file path looks different
 cd /scratch/alpine/$USER/cow/demux
@@ -112,7 +120,7 @@ cd /scratch/alpine/$USER/cow/demux
 #Below is the command you will run to demultiplex the samples.
 
 qiime demux emp-paired \
---m-barcodes-file ../metadata/ADD BARCODE FILE NAME HERE \
+--m-barcodes-file ../metadata/cow_barcodes.txt \
 --m-barcodes-column barcode \
 --p-rev-comp-mapping-barcodes \
 --p-rev-comp-barcodes \
