@@ -139,6 +139,31 @@ qiime demux summarize \
  ```
  sbatch name of your script.sh
  ```
+**A) Per-sample sequence counts (Demultiplexed sequence counts summary)**
+
+**Total samples:** 147 (forward) and 147 (reverse)
+
+**Forward reads (same values shown for reverse):**
+
+- **Approx. minimum:** **112**
+- **Approx. maximum:** **43,963**
+- **Median:** **12,943**
+- **Mean:** **15,163.39**
+- **Total reads:** **2,229,019**
+
+**Any very low samples (outliers)?**
+
+- **Yes.** The **minimum = 112** is extremely low (clear outlier).
+- In your per-sample table screenshots, there are also samples in the **hundreds to low thousands** (e.g., **751**, **1,906**, etc.), which are low relative to the median (~12.9k).
+
+**B) Quality plots (Forward + Reverse) → truncation choice**
+
+From the **Interactive Quality Plot**:
+
+- **Forward reads:** quality stays high for most of the read length, with the “messier/noisier” tail mainly at the very end.
+- **Reverse reads:** quality drops earlier and the tail looks noisier than forward.
+
+Recommended truncation: **trunc-len-f = 240** and **trunc-len-r = 200** because these cut off the low-quality ends of the reads (especially the reverse reads) while keeping enough high-quality sequence for denoising and merging.
 
 10.    Denoise. 
 
