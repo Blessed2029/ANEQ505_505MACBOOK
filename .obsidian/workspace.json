@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -182,7 +183,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "6d561a25f20e9c0c",
+  "active": "52a1573675f6a50e",
   "lastOpenFiles": [
     "test.md",
     "homework_1_mac.md",

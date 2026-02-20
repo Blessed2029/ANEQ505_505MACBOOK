@@ -98,16 +98,17 @@ a.    Go into your slurm directory using OnDemand. Create a new file named **
 
 
 ```
-#!/bin/bash
-#SBATCH --job-name=demux
-#SBATCH --nodes=1
-#SBATCH --ntasks=12
-#SBATCH --partition=amilan
-#SBATCH --time=02:00:00
-#SBATCH --mail-type=ALL
-#SBATCH --output=slurm-%j.out
-#SBATCH --qos=normal
-#SBATCH --mail-user=ADD_YOUR_EMAIL@colostate.edu
+#!/bin/bash  
+#SBATCH --job-name=demux  
+#SBATCH --nodes=1  
+#SBATCH --ntasks=12  
+#SBATCH --partition=amilan  
+#SBATCH --time=02:00:00  
+#SBATCH --mail-type=ALL  
+#SBATCH --output=slurm-%j.out  
+#SBATCH --qos=normal  
+#SBATCH --mail-user=c837277701@colostate.edu
+
 
 #What needs to go here in order to “turn on” qiime2? Hint: we do these 2 commands every time we activate qiime2!                        
 
@@ -139,31 +140,7 @@ qiime demux summarize \
  ```
  sbatch name of your script.sh
  ```
-**A) Per-sample sequence counts (Demultiplexed sequence counts summary)**
 
-**Total samples:** 147 (forward) and 147 (reverse)
-
-**Forward reads (same values shown for reverse):**
-
-- **Approx. minimum:** **112**
-- **Approx. maximum:** **43,963**
-- **Median:** **12,943**
-- **Mean:** **15,163.39**
-- **Total reads:** **2,229,019**
-
-**Any very low samples (outliers)?**
-
-- **Yes.** The **minimum = 112** is extremely low (clear outlier).
-- In your per-sample table screenshots, there are also samples in the **hundreds to low thousands** (e.g., **751**, **1,906**, etc.), which are low relative to the median (~12.9k).
-
-**B) Quality plots (Forward + Reverse) → truncation choice**
-
-From the **Interactive Quality Plot**:
-
-- **Forward reads:** quality stays high for most of the read length, with the “messier/noisier” tail mainly at the very end.
-- **Reverse reads:** quality drops earlier and the tail looks noisier than forward.
-
-Recommended truncation: **trunc-len-f = 240** and **trunc-len-r = 200** because these cut off the low-quality ends of the reads (especially the reverse reads) while keeping enough high-quality sequence for denoising and merging.
 
 10.    Denoise. 
 
@@ -172,44 +149,82 @@ Fill in the blank to denoise your samples based on what you think should be trim
 ```
 cd ADD PATH TO DADA2 DIRECTORY
 
-qiime dada2 denoise-paired \
---i-demultiplexed-seqs ../demux/demux_cow.qza \
---p-trim-left-f NUMBER \
---p-trim-left-r NUMBER \
---p-trunc-len-f NUMBER \
---p-trunc-len-r NUMBER \
---p-n-threads 6 \
---o-representative-sequences cow_seqs_dada2.qza \
---o-denoising-stats cow_dada2_stats.qza \
+qiime dada2 denoise-paired \  
+--i-demultiplexed-seqs ../demux/demux_cow.qza \  
+--p-trim-left-f 0 \  
+--p-trim-left-r 0 \  
+--p-trunc-len-f 150 \  
+--p-trunc-len-r 150 \  
+--p-n-threads 6 \  
+--o-representative-sequences cow_seqs_dada2.qza \  
+--o-denoising-stats cow_dada2_stats.qza \  
 --o-table cow_table_dada2.qza
 
 #Visualize the denoising results:
-qiime metadata tabulate \
---m-input-file cow_dada2_stats.qza \
---o-visualization YOUR_OUTPUT_FILENAME_HERE.qzv
+qiime metadata tabulate \  
+--m-input-file cow_dada2_stats.qza \  
+--o-visualization cow_dada2_stats.qzv
 
-qiime feature-table summarize \
---i-table cow_table_dada2.qza \
---m-sample-metadata-file ../metadata/cow_metadata.txt \
---o-visualization YOUR_OUTPUT_FILENAME_HERE.qzv
+qiime feature-table summarize \  
+--i-table cow_table_dada2.qza \  
+--m-sample-metadata-file ../metadata/cow_metadata.txt \  
+--o-visualization cow_table_dada2.qzv
 
-qiime feature-table tabulate-seqs \
---i-data cow_seqs_dada2.qza \
---o-visualization YOUR_OUTPUT_FILENAME_HERE.qzv
+qiime feature-table tabulate-seqs \  
+--i-data cow_seqs_dada2.qza \  
+--o-visualization cow_seqs_dada2.qzv
 ```
 
 	
 Briefly **describe** the key information from each denoising output file:
 1. Representative Sequences
+- This file contains the **unique ASV sequences** produced by DADA2 (the “representative” DNA sequence for each feature/ASV).
+- **4,657 features (ASVs)**.
+- Sequence length summary:
+    
+    - **Min length:** 240 nt
+        
+    - **Max length:** 427 nt
+        
+    - **Mean length:** 253.06 nt
+        
+    - Most sequences are tightly clustered around **~253 nt** (the percentile table shows ~252–254 for most).
 2. Denoising Stats
+- This file reports, **per sample**, how many reads survive each DADA2 step:
+    - `input` → `filtered` → `denoised` → `merged` → `non-chimeric`
+- The most important “final yield” column is **percentage of input non-chimeric** (how many reads remain after all steps).
+
 3. Denoised Table
+- This is the **feature table**: counts of each ASV in each sample after denoising + chimera removal.
+- Overall table summary:
+    
+    - **Number of samples:** 147
+        
+    - **Number of features:** 4,657
+        
+    - **Total frequency:** 1,691,073 reads (total counts in the final table)
+        
+    - Per-sample read counts include:
+        
+        - **Mean frequency:** 11,503.9
+            
+        - **Median frequency:** 9,670
+            
+        - **Max frequency:** 34,453
+            
+        - **Min frequency:** 0
 
 **Answer the following questions:**  
-1. What is the mean reads per sample?
-2. How long are the reads?
-3. What is the maximum length of all your sequences?
-4. Which sample (not including extraction controls starting with EC) lost the highest % of reads?
+1. What is the mean reads per sample? **Mean frequency (mean reads/sample) = 11,503.9** (from the table summary).
+2. How long are the reads? Reads are **~253 bp on average**.   **Mean length = 253.06 nt** . Most sequences are tightly centered around ~253 (percentile summary shows ~252–254 for most).
+3. What is the maximum length of all your sequences? **Maximum sequence length = 427 bp**.
+4. Which sample (not including extraction controls starting with EC) lost the highest % of reads? 
+   **`2019.3.14.cow.oral.20`**
+- **% input non-chimeric = 8.92%**
+- So it **lost 91.08%** of reads (100 − 8.92).
+(I sorted table and it shows several EC* controls with lower values, but the first **non-EC** row with the lowest retention is **cow.oral.20**)
 5. Why did you chose to trim or truncate where you did?
+I truncated both forward and reverse reads at **150 bp** (with **trim-left = 0**) because the per-base quality scores start to deteriorate toward the read tails, and truncating before the low-quality region improves denoising accuracy. Even with truncation, **150 + 150 = 300 bp** still leaves sufficient overlap to merge reads for an amplicon of ~**253 bp** (≈ **47 bp** overlap), so merging remains reliable while reducing error from poor-quality tails.
 
 **To submit your homework from this document:**
 write all of your commands here, then use command+P (for mac) or control+P (for windows) and search Git: commit. click it. then search for Git: Push and click it. go to your github online to check that it pushed correctly. we will check your github for homework credit. 
