@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "homework_1_mac.md",
+                "file": "homework_2_mac_VS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "homework_1_mac"
+              "title": "homework_2_mac_VS"
             }
           }
         ]
@@ -74,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -95,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "homework_2_mac_VS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for homework_2_mac_VS"
             }
           },
           {
@@ -183,10 +183,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "52a1573675f6a50e",
+  "active": "568d4040b5c81f7b",
   "lastOpenFiles": [
-    "test.md",
     "homework_1_mac.md",
+    "homework_2_mac_VS.md",
+    "Screenshot 2026-03-03 at 9.24.34 PM 1.png",
+    "Screenshot 2026-03-03 at 9.24.34 PM.png",
+    "Screenshot 2026-03-03 at 7.29.29 PM.png",
+    "homework_2_mac_VS 1.md",
+    "test.md",
     "Welcome.md"
   ]
 }
