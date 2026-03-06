@@ -124,7 +124,7 @@ qiime taxa barplot \
 
 From the legend/taxa dominating the fecal block, the two most abundant classes are:
 
-1. **Clostridia** (Bacillota / Firmicutes lineage)
+1. **Clostridia** (Firmicutes /Bacillota lineage)
     
 2. **Bacteroidia** (Bacteroidota lineage)
 
