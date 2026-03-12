@@ -70,7 +70,7 @@ This created a `raw_reads/` folder in:
 
 ```
 #launch an interactive session: 
-ainteractive --ntasks=6 --time=08:00:00
+ainteractive --ntasks=6 --time=04:00:00
 
 #insert your code here to activate qiime. Hint: there should be 2 things you add here
 
