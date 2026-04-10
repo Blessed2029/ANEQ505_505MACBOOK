@@ -34,12 +34,12 @@ module load qiime2/2024.10_amplicon
 ```
 #go to the cow directory
 
-qiime diversity alpha-rarefaction \
---i-table dada2/cow_table_dada2_filtered300.qza \
---m-metadata-file metadata/cow_metadata.txt \
---o-visualization alpha_rarefaction_curves_16S.qzv \
---p-min-depth ADD MIN RAREFACTION DEPTH \
---p-max-depth ADD MAX RAREFACTION DEPTH
+qiime diversity alpha-rarefaction \  
+--i-table dada2/cow_table_dada2_filtered300.qza \  
+--m-metadata-file metadata/cow_metadata.txt \  
+--o-visualization alpha_rarefaction_curves_16S.qzv \  
+--p-min-depth 1000 \  
+--p-max-depth 25000
 ```
 
 
@@ -51,7 +51,7 @@ qiime diversity core-metrics-phylogenetic \
 --i-phylogeny tree/tree_placements_gg2.qza \  
 --m-metadata-file metadata/cow_metadata.txt \  
 --p-sampling-depth 2000 \  
---output-dir core-metrics_filtered300_depth2000
+--output-dir core-metrics_filtered300_depth2000/5K
 ```
 
 
@@ -81,17 +81,17 @@ qiime diversity alpha-group-significance \
 
 1. what is the name of the file you needed to use to figure out what min and max depths to use to generate the alpha rarefaction plot? (Hint: which file contains the sequencing depths for each sample).                                                                                                                                 The file was `dada2/cow_table_dada2_filtered300.qzv`, which contains the sequencing depths for each sample and was used to choose the minimum and maximum depths for the alpha rarefaction plot.
 
-2. what did you choose for the rarefaction depth (the input for core metrics -p-sampling-depth flag)? why?                                                                                                                                I chose a rarefaction depth of 2000 because that is the `--p-sampling-depth` value used in the core metrics step, and it is a reasonable depth that helps retain samples while still standardizing sequencing depth across samples for comparison.
+2. what did you choose for the rarefaction depth (the input for core metrics -p-sampling-depth flag)? why?                                                                                                                                I chose a rarefaction depth of 2000 because that is the `--p-sampling-depth` value used in the core metrics step, and it is a reasonable depth that helps retain samples while still standardizing sequencing depth across samples for comparison. 4K-6K
 
-3. Which cow body location had more observed features? Which has the lowest?                 Fecal had the highest observed features, and control had the lowest. The skin group was also high, but fecal appeared slightly higher overall in the boxplot.
+3. Which cow body location had more observed features? Which has the lowest?                 Fecal had the highest observed features, and control had the lowest. The skin group was also high, but fecal appeared slightly higher overall in the boxplot. Nasal
 
 4. What is the main difference between Faiths PD and Shannons alpha diversity metrics?            Faith’s PD accounts for the phylogenetic relationships among taxa, while Shannon’s alpha diversity measures species richness and evenness without considering phylogeny.
 
 5. Which diversity metrics produced by the core-metrics pipeline require phylogenetic information?                                                                                                                               Faith’s PD, weighted UniFrac, and unweighted UniFrac.
 
-6. Which two body sites have the highest Faiths PD alpha diversity?  Are the groups significantly different?                                                                                                                   The two body sites with the highest Faith’s PD alpha diversity were skin and fecal. Yes, the groups were significantly different, with a pairwise p-value of 1.038661e-04.
+6. Which two body sites have the highest Faiths PD alpha diversity?  Are the groups significantly different?                                                                                                                   The two body sites with the highest Faith’s PD alpha diversity were skin and fecal. Yes, the groups were significantly different, with a pairwise p-value of 1.038661e-04. Nasal and Oral
 
-7. Does it seem like there are any groupings in the beta diversity? What are the groupings? Yes, there are groupings in the beta diversity. Fecal samples form a distinct cluster, skin and udder samples cluster close together, and oral and nasal samples are more spread out and partially overlap.
+7. Does it seem like there are any groupings in the beta diversity? What are the groupings? Yes, there are groupings in the beta diversity. Fecal samples form a distinct cluster, skin and udder samples cluster close together, and oral and nasal samples are more spread out and partially overlap. Skin/udder
 
 8. Why do you think these samples are grouping together?                                                     These samples are grouping together because samples collected from the same body site tend to have more similar microbial communities than samples from different body sites. Each body site provides a different local environment, which influences which microbes are able to grow there.
 
